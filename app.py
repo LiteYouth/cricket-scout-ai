@@ -31,8 +31,9 @@ Verdict: Elite ODI batsman, match winner on his day \n
 Now do the same for {player} in {format}."""}
             ]
         }
-        response = requests.post(url, headers=headers, json=payload)
-        data = response.json()
+        with st.spinner("Generating scouting report..."):
+            response = requests.post(url, headers=headers, json=payload)
+            data = response.json()
         result = data["choices"][0]["message"]["content"]
         if "Invalid input. Please enter a real cricket player name." in result:
             st.warning("Invalid input. Please enter a real cricket player name.")
