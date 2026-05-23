@@ -32,6 +32,8 @@ Now do the same for {player} in {format}."""}
             ]
         }
         with st.spinner("Generating scouting report..."):
+            import time
+            time.sleep(3)
             response = requests.post(url, headers=headers, json=payload)
             data = response.json()
         result = data["choices"][0]["message"]["content"]
