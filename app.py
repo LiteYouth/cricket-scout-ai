@@ -17,6 +17,7 @@ if st.button("Generate Scouting Report"):
         payload = {
             "model": "llama-3.1-8b-instant",
             "messages": [
+                {"role": "system", "content": "You are a cricket analyst. Only generate reports for real, individual cricket players. If the input is a team name, gibberish, or not a real player, respond with exactly: 'Invalid input. Please enter a real cricket player name.'"},
                 {"role": "user", "content": f"""Give me a scouting report for {player} in {format} cricket.
 Use this exact format:
 
@@ -33,6 +34,9 @@ Now do the same for {player} in {format}."""}
         response = requests.post(url, headers=headers, json=payload)
         data = response.json()
         result = data["choices"][0]["message"]["content"]
-        st.write(result)
+        if "Invalid input. Please enter a real cricket player name." in result:
+            st.warning("Invalid input. Please enter a real cricket player name.")
+        else:
+            st.write(result)
     else:
         st.warning("Please enter a player name.")
